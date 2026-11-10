@@ -8,7 +8,7 @@ A Docker image based on Ubuntu 26.04 LTS for running Ansible playbooks in CI/CD 
 - Git
 - OpenSSH client and rsync
 - SOPS and age
-- Bash, curl, jq, and unzip
+- Bash, curl, jq, yq, and unzip
 
 The image has no fixed `ENTRYPOINT`, so it can run both `ansible-playbook` and supporting CI commands.
 

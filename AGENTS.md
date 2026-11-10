@@ -13,7 +13,7 @@ This repository builds and publishes a small GHCR job image for running Ansible 
    ```sh
    docker build -t ansible-ci:test .
    docker run --rm ansible-ci:test sh -ec \
-     'ansible --version; git --version; sops --version; age --version; python3 --version'
+     'ansible --version; git --version; sops --version; age --version; jq --version; yq --version; python3 --version'
    ```
 
 4. Validate workflow changes with `actionlint`.
