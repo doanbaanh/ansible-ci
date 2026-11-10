@@ -33,12 +33,12 @@ Pass SSH keys, age keys, and other credentials at runtime through your CI secret
 
 ## Publishing to GHCR
 
-The `.github/workflows/container.yml` workflow builds the image:
+The `.github/workflows/container.yml` workflow builds and publishes the image only when a Git tag matching `v*` is pushed. The container image uses the exact Git tag, for example:
 
-- on pushes to `main`;
-- for tags matching `v*`;
-- when started manually;
-- on pull requests without publishing.
+```text
+Git tag:   v1.0.0
+Image tag: ghcr.io/<owner>/<repository>:v1.0.0
+```
 
 The image is published to:
 
@@ -49,7 +49,7 @@ ghcr.io/<owner>/<repository>
 Pull the published image with:
 
 ```sh
-docker pull ghcr.io/<owner>/<repository>:latest
+docker pull ghcr.io/<owner>/<repository>:v1.0.0
 ```
 
 ## Ansible collections

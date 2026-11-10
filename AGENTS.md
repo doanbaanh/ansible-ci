@@ -23,7 +23,7 @@ This repository builds and publishes a small GHCR job image for running Ansible 
 
 - Pass SSH, SOPS, age, cloud, and registry credentials at runtime through the CI secret store.
 - Keep decrypted secrets, private keys, tokens, and generated inventories out of the image and Git history.
-- Keep GitHub Actions permissions least-privileged; pull requests build without publishing.
+- Keep GitHub Actions permissions least-privileged; only pushed release tags build and publish images.
 
 ## Completion
 
