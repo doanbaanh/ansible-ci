@@ -1,0 +1,20 @@
+# Local tools and editors
+.omx/
+.DS_Store
+.idea/
+.vscode/
+
+# Credentials and decrypted secrets
+.env
+.env.*
+!.env.example
+*.agekey
+*.key
+*.pem
+*.retry
+
+# Python and Ansible runtime files
+.ansible/
+.venv/
+__pycache__/
+*.py[cod]
