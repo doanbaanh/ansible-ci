@@ -5,7 +5,7 @@ ARG SOPS_VERSION=3.13.3
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     age \
-    ansible \
+    ansible-core \
     bash \
     ca-certificates \
     curl \
@@ -38,3 +38,13 @@ RUN arch="$(dpkg --print-architecture)" \
  && echo "${checksum}  ${binary}" | sha256sum -c - \
  && install -m 0755 "${binary}" /usr/local/bin/yq \
  && rm -f "${binary}"
+
+COPY requirements.yml /tmp/requirements.yml
+
+RUN for attempt in 1 2 3; do \
+      ansible-galaxy collection install \
+        -r /tmp/requirements.yml \
+        -p /usr/share/ansible/collections && break; \
+      [ "${attempt}" -lt 3 ] || exit 1; \
+    done \
+ && rm -rf /root/.ansible /tmp/*

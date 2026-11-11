@@ -9,6 +9,7 @@ A Docker image based on Ubuntu 26.04 LTS for running Ansible playbooks in CI/CD 
 - OpenSSH client and rsync
 - SOPS and age
 - Bash, curl, jq, yq, and unzip
+- Pinned Ansible collections from [`requirements.yml`](requirements.yml)
 
 The image has no fixed `ENTRYPOINT`, so it can run both `ansible-playbook` and supporting CI commands.
 
@@ -54,16 +55,7 @@ docker pull ghcr.io/<owner>/<repository>:v1.0.0
 
 ## Ansible collections
 
-The Ubuntu `ansible` package used by this image already includes the standard community collection bundle, including:
-
-- `ansible.posix`
-- `community.general`
-- `community.crypto`
-- `community.docker`
-- `kubernetes.core`
-- `amazon.aws`
-- `azure.azcollection`
-- `google.cloud`
+The deployment collections and their exact versions are installed system-wide from [`requirements.yml`](requirements.yml). They remain available when GitHub Actions overrides `HOME` with `/github/home`, and a matching project-level `ansible-galaxy collection install -r requirements.yml` skips downloading them again.
 
 List all installed collections:
 
@@ -71,20 +63,7 @@ List all installed collections:
 docker run --rm ansible-ci ansible-galaxy collection list
 ```
 
-Avoid installing another generic collection bundle unless it is required. For project-specific dependencies, create a `requirements.yml`, pin only the collections you use, and install them while building the image:
-
-```yaml
-collections:
-  - name: example.namespace
-    version: 1.2.3
-```
-
-```dockerfile
-COPY requirements.yml /tmp/requirements.yml
-RUN ansible-galaxy collection install -r /tmp/requirements.yml
-```
-
-Some collections also require Python libraries or external command-line tools. Check the `Requirements` section of the modules you use.
+When a deployment changes a collection version, update this file and publish a new image tag. Some collections also require Python libraries or external command-line tools; check the `Requirements` section of the modules you use.
 
 ## License
 
