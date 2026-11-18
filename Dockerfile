@@ -13,6 +13,7 @@ RUN apt-get update \
     jq \
     openssh-client \
     python3 \
+    python3-librouteros \
     rsync \
     unzip \
  && arch="$(dpkg --print-architecture)" \
